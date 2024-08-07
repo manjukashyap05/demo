@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ GAME</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: rgb(202, 194, 194);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            padding: 0.5rem;
+            background: #f3ecec;
+            box-shadow: 1px 2px 3px #000;
+            margin: 0.5rem;
+            border-radius: 7px;
+        }
+
+        button {
+            background: #f3ecec;
+            padding: 0.5rem 2rem;
+            margin: 0.5rem;
+            border-radius: 7px;
+            box-shadow: 1px 2px 3px #000;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul li input {
+            margin-right: 0.5rem;
+        }
+
+        .box {
+            padding: 1rem;
+            margin: auto;
+            width: 50%;
+            display: block;
+        }
+
+        .box-wrapper {
+            padding: 1rem;
+            background: white;
+        }
+
+        hr {
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-wrapper">
+                            <h2 id="questionhheading">Quiz game</h2>
+                            <hr>
+                            <ul>
+                                <li id="abc1"><input type="radio" name="answer" class="answer" id="checkbox1"><label for="checkbox1" id="option1">option 1</label></li>
+                                <li id="abc2"><input type="radio" name="answer" class="answer" id="checkbox2"><label for="checkbox2" id="option2">option 2</label></li>
+                                <li id="abc3"><input type="radio" name="answer" class="answer" id="checkbox3"><label for="checkbox3" id="option3">option 3</label></li>
+                                <li id="abc4"><input type="radio" name="answer" class="answer" id="checkbox4"><label for="checkbox4" id="option4">option 4</label></li>
+                            </ul>
+                            <hr>
+                            <button type="button" id="submit">Submit</button>
+                            <div id="error-message" class="error"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const quizData = [
+            {
+                question: "question1",
+                options: ["1", "2", "3", "4"],
+                correct: 0
+            },
+            {
+                question: "3rd 1",
+                options: ["Ram", "Sita"],
+                correct: 0
+            },
+            {
+                question: "question 2",
+                options: [
+                    "question 2 ------1",
+                    "question 2 ------2",
+                    "question 2 ------3",
+                    "question 2 ------4"
+                ],
+                correct: 0
+            }
+        ];
+
+        const boxWrap = document.querySelector(".box-wrapper");
+        const answerEle = document.querySelectorAll(".answer");
+        const [questionEle, option1, option2, option3, option4] = document.querySelectorAll("#questionhheading, #option1, #option2, #option3, #option4");
+        const submitBtn = document.querySelector("#submit");
+        const errorMessage = document.querySelector("#error-message");
+
+        let currentQuiz = 0;
+        let score = 0;
+
+        const getQuizData = () => {
+            const { question, options } = quizData[currentQuiz];
+            questionEle.innerText = `${currentQuiz + 1}. ${question}`;
+            options.forEach((option, index) => {
+                const optionElement = document.querySelector(`#option${index + 1}`);
+                if (optionElement) {
+                    optionElement.innerText = option;
+                }
+            });
+        };
+
+        const getSelectedValue = () => {
+            let selectedOption;
+            answerEle.forEach((currentOption, index) => {
+                if (currentOption.checked) {
+                    selectedOption = index;
+                }
+            });
+            return selectedOption;
+        };
+
+        const deselectAll = () => {
+            answerEle.forEach(indx => {
+                indx.checked = false;
+            });
+        };
+
+        const loadNextQuestion = () => {
+            if (currentQuiz < quizData.length) {
+                getQuizData();
+                errorMessage.textContent = ''; // Clear error message
+            } else {
+                boxWrap.innerHTML = `<div>Your Score Is ${score}/${quizData.length}</div>`;
+            }
+        };
+
+        // Load the first quiz
+        getQuizData();
+
+        submitBtn.addEventListener("click", () => {
+            const selectedAnswer = getSelectedValue();
+            
+            // Check if an answer is selected
+            if (selectedAnswer === undefined) {
+                errorMessage.textContent = "Please select an option before submitting.";
+            } else {
+                if (selectedAnswer === quizData[currentQuiz].correct) {
+                    score++;
+                }
+                currentQuiz++;
+                deselectAll();
+                loadNextQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
