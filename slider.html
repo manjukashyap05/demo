@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Slider</title>
+    <style>
+        .slider {
+            overflow: hidden;
+            display: flex;
+            width: 100%;
+            position: relative;
+            height: 60vh;
+        }
+
+        .slide {
+            width: 100%;
+            background-size: cover !important;
+            background-position: center !important;
+            flex: 0 0 100%;
+            position: absolute;
+            transition: transform 0.5s ease-in-out; /* Smooth transition */
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .slider.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <img class="slide" src="https://picsum.photos/id/237/1000/500">
+            <img class="slide" src="https://picsum.photos/id/247/1000/500">
+            <img class="slide" src="https://picsum.photos/id/297/1000/500">
+        </div>
+        <div class="slider-controls">
+            <button class="prev">Prev</button>
+            <button class="nxt">Next</button>
+        </div>
+    </div>
+    <script>
+        const slider = document.querySelector(".slider");
+        const slides = document.querySelectorAll(".slide");
+        const prevBtn = document.querySelector(".prev");
+        const nxtBtn = document.querySelector(".nxt");
+        let counter = 0;
+        const totalSlides = slides.length;
+
+        const goPrev = () => {
+            if (counter > 0) {
+                counter--;
+                slideImage();
+            }
+        }
+
+        const goNext = () => {
+            if (counter < totalSlides - 1) {
+                counter++;
+                slideImage();
+            }
+        }
+
+        slides.forEach((slide, index) => {
+            slide.style.left = `${index * 100}%`;
+        });
+
+        const slideImage = () => {
+            slides.forEach((slide) => {
+                slide.style.transform = `translateX(-${counter * 100}%)`; // Use translateX to move slides
+            });
+        };
+
+        prevBtn.addEventListener("click", goPrev);
+        nxtBtn.addEventListener("click", goNext);
+
+    </script>
+</body>
+
+</html>
