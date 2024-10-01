@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>digital clock</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+body{
+    font-size: 16px;
+}
+        .conatiner {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            height: 100vh;
+            background: rgb(9, 28, 88);
+        }
+
+        h1 {
+            color: rgb(251, 251, 251);
+            font-size: 6rem;
+            text-transform: uppercase;
+            text-shadow: 10px 10px 4px #121010;
+
+        }
+
+        #clock {
+            border-radius: 13px;
+           font-size: 4rem;
+            color: rgb(255, 255, 255);
+            padding: 1rem;
+            border: 1px solid rgb(220 206 173);
+            box-shadow: 1px 4px 3px #000000;
+            position: relative;
+
+        }
+
+        .clockHolder {
+            position: relative;
+        }
+
+        .mainDiv::after {
+            content: " ";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            width: 70%;
+            height: 15px;
+            background-color: #f5ee62;
+            transform: translate(-50%, 0);
+            border-radius: 3px 3px 8px 8px;
+        }
+       
+@media(max-width:768px){
+    #clock{
+        font-size: 2.5rem;
+    }  
+    h1 {
+        font-size: 2rem; 
+    text-shadow: 4px 4px 2px #3b3828;
+}
+}
+    </style>
+</head>
+
+<body>
+    <div class="conatiner">
+        <h1>Digital clock</h1>
+        <div class="clockHolder">
+
+            <div class="mainDiv">
+                <p id="clock"></p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        const dateHolder = document.querySelector("#clock");
+        const curTimer = () => {
+            const cuTime = new Date().toLocaleTimeString();
+            dateHolder.innerHTML = cuTime;
+            setInterval(curTimer, 1000);
+        };
+        curTimer();
+    </script>
+</body>
+
+</html>
