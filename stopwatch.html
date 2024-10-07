@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Stopwatch</title>
+   <style>
+      * {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+:root {
+   --bg-primary: #282c34;
+   --btn-background: #fff;
+   --btn-hover-background: #ffaa00;
+   --btn-color: #fff;
+}
+
+html {
+   color: #fff;
+   font-size: 62.5%; 
+}
+
+body {
+   height: 100vh;
+   background: var(--bg-primary);
+   display: flex;
+   flex-direction: column; 
+   justify-content: center;
+   align-items: center;
+   padding: 1rem; 
+   text-align: center; 
+}
+h1 {
+   font-size: 3rem; 
+   margin-bottom: 2rem; 
+}
+
+section {
+   background: var(--btn-background);
+   padding: 2rem;
+   max-width: 300px; 
+   width: 100%; 
+   border-radius: 10px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+p {
+   color: var(--bg-primary);
+   font-size: 4rem;
+   margin-bottom: 1rem; 
+}
+
+.mainDiv {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   justify-items: center;
+   align-items: center;
+   gap: 1em;
+}
+
+.btn-box {
+   border-radius: 1.5rem;
+   background: var(--btn-background);
+   border: 1px solid #ccc;
+   padding: 1rem;
+   font-size: 1.5rem;
+   box-shadow: 2px 2px 3px #ccc;
+   cursor: pointer;
+   transition: all 0.2s linear;
+   width: 100%; 
+}
+
+.btn-box:hover {
+   background: var(--btn-hover-background);
+   color: #fff;
+}
+
+#msgBox {
+   height: 20vh;
+   overflow-y: auto;
+   margin-top: 1rem;
+   padding: 0.5rem;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   background: #f8f8f8;
+}
+
+#msgBox p {
+   font-size: 1.5rem;
+   color: red;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+   section {
+      min-width: 250px; 
+   }
+
+   p {
+      font-size: 3rem;
+   }
+
+   .btn-box {
+      font-size: 1.2rem;
+      padding: 0.8rem; 
+   }
+
+   #msgBox p {
+      font-size: 1.2rem; 
+   }
+}
+
+   </style>
+</head>
+
+<body>
+   <h1>Stopwatch</h1>
+   <section>
+      <!-- Display the current timer value -->
+      <p id="counter">0</p> 
+      <div class="container">
+         <div class="mainDiv">
+            <button class="btn-box" id="startTimer">Start</button>
+            <button class="btn-box" id="stopTimer">Stop</button>
+            <button class="btn-box" id="resetTimer">Reset</button>
+            <button class="btn-box" id="showTime">Show Time</button>
+            <button class="btn-box" id="clearTime">Clear Time</button>
+         </div>
+         <!-- Area to display  times -->
+         <div id="msgBox"></div> 
+      </div>
+   </section>
+   <script>
+      // Initializing start value 
+      let startValue = 0;
+      // Initializing interval
+      let interval;
+      const counterBox = document.querySelector("#counter");
+      const msgBox = document.querySelector("#msgBox");
+
+      // Function to start the timer when the start button is clicked 
+      const handleStartTimer = () => {
+         if (!interval) { // Prevent starting multiple intervals
+            interval = setInterval(() => {
+               counterBox.innerHTML = startValue++;
+            }, 1000);
+         }
+      };
+
+      // Function to stop the timer when the stop button is clicked
+      const handleStopTimer = () => {
+         clearInterval(interval);
+         interval = null; // Reset interval
+         alert(`Timer stopped at ${startValue} seconds`);
+      };
+
+      // Function to reset the timer 
+      const handleResetTimer = () => {
+         clearInterval(interval);
+         interval = null; // Reset interval
+         startValue = 0;
+         counterBox.innerHTML = '0';
+      };
+
+      // Function to show the current timer value
+      const handleshowTime = () => {
+         const newp = document.createElement("p");
+         newp.innerHTML = `Time is: ${startValue} seconds`;
+         msgBox.appendChild(newp);
+      };
+
+      // Function to clear all printed times
+      const handleClearTime = () => {
+         msgBox.innerHTML = '';
+      };
+
+      // Event listeners for buttons
+      document.querySelector("#startTimer").addEventListener("click", handleStartTimer);
+      document.querySelector("#stopTimer").addEventListener("click", handleStopTimer);
+      document.querySelector("#resetTimer").addEventListener("click", handleResetTimer);
+      document.querySelector("#showTime").addEventListener("click", handleshowTime);
+      document.querySelector("#clearTime").addEventListener("click", handleClearTime);
+     
+   </script>
+</body>
+
+</html>
